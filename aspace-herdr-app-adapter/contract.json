@@ -1,0 +1,26 @@
+{
+  "adapter": "aspace-herdr-app-adapter",
+  "version": "0.1.0",
+  "upstream": {
+    "repo": "herdrdev/herdr-app",
+    "license": "Apache-2.0",
+    "frozen_commit": "b1a2a67",
+    "version": "0.1.14"
+  },
+  "surface": {
+    "cli": "herdr-app --help ; herdr-app --skill ; herdr-app --version ; herdr-app check <mod> ; herdr-app types <mod>",
+    "offline": true,
+    "notes": "Sous-commandes qui parlent seulement (AGENTS.md amont) : --help, --skill (imprime src/SKILL.md), --version, check/types (vérificateur gpui-shell). La fenêtre elle-même n'est jamais lancée par l'adapter ; toute exécution du binaire se fait avec HERDR_APP_HOME pointant vers un répertoire scratch."
+  },
+  "never": [
+    "lancer la fenêtre sans HERDR_APP_HOME scratch (AGENTS.md amont)",
+    "tout envoi télémétrie (DO_NOT_TRACK=1 et HERDR_TELEMETRY=0 forcés)",
+    "tout appel réseau"
+  ],
+  "env": {
+    "HERDR_APP_HOME": "<répertoire scratch>",
+    "DO_NOT_TRACK": "1",
+    "HERDR_TELEMETRY": "0"
+  },
+  "telemetry": "module src/telemetry.rs : rapport anonyme 1/jour, ON par défaut, coupé par DO_NOT_TRACK / HERDR_TELEMETRY=0 / CI ; seuls les builds release (HERDR_APP_RELEASE) envoient. L'adapter force les deux interrupteurs et ne construit que du debug (voir TELEMETRY-AUDIT)"
+}
